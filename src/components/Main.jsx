@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import InputSection from './InputSection'
 import DisplaySection from './DisplaySection'
 
@@ -8,6 +8,19 @@ function Main() {
   }
 
   const [todos, setTodos] = React.useState([])
+
+  useEffect(() => {
+    const storedTodos = JSON.parse(localStorage.getItem("todos"))
+    if(!storedTodos) {
+      localStorage.setItem("todos", JSON.stringify([]))
+    } else {
+      setTodos(storedTodos)
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos))
+  }, [todos])
 
   return (
     <main>
